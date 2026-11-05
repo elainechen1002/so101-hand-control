@@ -1,0 +1,35 @@
+# Python environments and generated caches
+.venv/
+venv/
+env/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Credentials and local configuration (never commit real secrets)
+.env
+.env.*
+!.env.example
+secrets/
+credentials/
+credentials*.json
+*.pem
+*.key
+
+# Personal files, editor settings, and local recordings
+.DS_Store
+.AppleDouble/
+.vscode/
+.idea/
+*.swp
+*.swo
+*.log
+personal/
+local_data/
