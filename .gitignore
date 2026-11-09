@@ -33,3 +33,6 @@ credentials*.json
 *.log
 personal/
 local_data/
+
+# Local browser viewer dependencies
+node_modules/

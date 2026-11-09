@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SO-101 · Joint viewer</title>
+  <link rel="stylesheet" href="style.css">
+  <script type="importmap">{"imports": {
+    "three": "./node_modules/three/build/three.module.js",
+    "three/": "./node_modules/three/",
+    "urdf-loader": "./node_modules/urdf-loader/src/URDFLoader.js"
+  }}</script>
+</head>
+<body>
+  <header><div><p class="eyebrow">ROBOT LAB / 02</p><h1>SO-101 <span>Joint viewer</span></h1></div><span class="badge">LOCAL MODEL ONLY</span></header>
+  <main>
+    <section class="viewport" aria-label="3D robot model">
+      <div id="scene"></div>
+      <p id="status" role="status">Loading official model…</p>
+      <div class="view-tools"><button id="view-reset" disabled>Reset view</button><p>Drag to orbit · Scroll to zoom · Right-drag to pan</p></div>
+    </section>
+    <aside aria-labelledby="joints-heading">
+      <p class="eyebrow">EXPLORE THE ARM</p><h2 id="joints-heading">Joint angles</h2>
+      <p>Move one joint at a time. Angles are in degrees.</p>
+      <fieldset id="joint-controls" disabled><legend class="sr-only">Robot joints</legend><div id="sliders"></div><button id="pose-reset" type="button">Reset all joints to zero</button></fieldset>
+      <p class="note">SO-101 follower · New calibration<br>Ranges come from the official URDF. Gripper angle is not an open percentage.</p>
+      <p class="note">Visualization only. No collision checks, IK, tracking, or motor commands. Model limits are not verified hardware safety limits.</p>
+    </aside>
+  </main>
+  <footer>TheRobotStudio model · <a href="models/SO101/PROVENANCE.md">Source &amp; license</a></footer>
+  <noscript>This viewer requires JavaScript and WebGL.</noscript>
+  <script type="module" src="app.js"></script>
+</body>
+</html>

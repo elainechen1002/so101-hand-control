@@ -1,0 +1,6 @@
+{
+  "name": "so101-local-viewer",
+  "private": true,
+  "type": "module",
+  "dependencies": {"three": "0.180.0", "urdf-loader": "0.13.1"}
+}

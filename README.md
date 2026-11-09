@@ -82,3 +82,63 @@ Run `python3 main.py` again. Sample 1 should now show `x=50.0`.
 
 For collaboration, review changes before committing and coordinate with each other
 before pushing. This milestone is intended as a local commit only.
+
+## Second milestone: local SO-101 joint viewer
+
+Open this project folder in VS Code: `/Users/elainechen/Documents/so101-hand-control`.
+The browser viewer loads the actual official SO-101 follower model, with six joint
+sliders (including the gripper). Drag the scene to orbit, scroll to zoom, and
+right-drag to pan. Each slider supports arrow keys (1 degree), Page Up/Down
+(10 degrees), and Home/End (model endpoints). Reset buttons restore zero angles
+or the initial viewing direction. Zero is the model's virtual calibration, not a
+command to home physical hardware.
+
+One-time dependency setup (Node.js/npm and internet required; Node 26.8.1 and
+npm 11.19.0 are installed on this Mac):
+
+```sh
+cd ~/Documents/so101-hand-control
+npm --prefix viewer ci
+```
+
+Launch using Python, with no additional Python packages:
+
+```sh
+cd ~/Documents/so101-hand-control
+python3 viewer.py
+```
+
+Open **http://127.0.0.1:8000** in a modern browser with WebGL enabled. Keep the
+Terminal command running; press Ctrl+C to stop. If port 8000 is busy, use
+`python3 viewer.py --port 8001` and open http://127.0.0.1:8001 instead.
+Do not open the HTML file directly. Once dependencies are installed, all viewer
+scripts and models load locally; no CDN or network connection is needed.
+
+### Added files
+
+- `viewer.py`: serves only the viewer folder, bound to this computer's loopback
+  address. It neither imports hand input nor opens hardware connections.
+- `viewer/index.html` and `viewer/style.css`: the page, labels, and responsive layout.
+- `viewer/app.js`: loads the URDF with `urdf-loader`, draws it with Three.js, and
+  converts degree slider values to radians. Joint relationships and mesh placement
+  come from the URDF; there is no IK solver. Rendering occurs only on changes.
+- `viewer/package.json` and `viewer/package-lock.json`: pinned browser dependencies;
+  `npm ci` installs them into the ignored `viewer/node_modules/` directory.
+- `viewer/models/SO101/`: unchanged official URDF and referenced STL meshes, upstream
+  README/license, source revision in `PROVENANCE.md`, and asset checksums.
+- `test_viewer.py`: verifies model integrity, six joint limits, and local mesh paths.
+
+Source: [TheRobotStudio/SO-ARM100](https://github.com/TheRobotStudio/SO-ARM100/tree/a758567c3978dfeefe282ede0500085a48fe8f78/Simulation/SO101),
+revision `a758567c3978dfeefe282ede0500085a48fe8f78`, Apache-2.0.
+The selected file is `so101_new_calib.urdf`, the follower model without a camera.
+The upstream gripper is angular; its slider is not an open percentage. Model joint
+limits constrain the viewer only. There is no collision checking or physics, and
+these limits are not verified safe ranges for your physical arm.
+
+Run checks with `python3 -m unittest -v`. The original `python3 main.py` demo is
+unchanged. Try moving just Shoulder pan, then use Reset all joints to zero.
+
+After this viewer works, the next milestone is a mouse-controlled target, followed
+by IK. Keep sensing → mapping → IK → motor control separate. No camera, Leap,
+motor connection, stop/enable controls, or physical safety system is implemented
+here; those safety prerequisites remain required before physical operation.
